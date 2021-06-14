@@ -86,6 +86,60 @@ console.log(convertTemperature(21)) // => 69.8
 console.log(convertTemperature(21, 0)) // => 70
 ```
 
+---
+
+### Partial Application for Single-Responsibility Functions
+
+Here's how to take advantage of **closures** and **callback functions** to fetch data from an API and assign specific parts of it to Single-Responsibility functions. This helps in cutting down repetition (i.e. making the code DRY) and make things overall easier to follow.
+
+```js
+// 1. The following function gets the data from a REST API given the URL and the route.
+function getData(baseUrl, route) {
+  fetch(`${baseUrl}${route}`)
+  // Once it fetches the API, it will return a response. The callback here transfers the response into JSON.
+  	.then(res => res.json()) 
+  // Once we have the data in JSON, the callback logs the data itself to the console.
+  	.then(data => console.log(data))
+}
+getData('https://jsonplaceholder.typicode.com', '/posts')
+
+
+// 2. Rewritten as a Partial Application
+function getData(baseUrl) { 			// => const getSocialMediaData
+  return function(route) { 				// => getSocialMediaData('/posts')
+    return function(callback) {   // => getSocialMediaPosts(callback)
+      fetch(`${baseUrl}${route}`)
+      	.then(response => response.json())
+      	.then(data => callback(data))
+    }
+  }
+}
+// The single responsibility here is for getSocialMediaData to get the data from the base url.
+const getSocialMediaData = getData('https://jsonplaceholder.typicode.com')
+
+// Since what's being actually assigned to getSocialMediaData is the RETURN of the getData function, we can pass in the ROUTE in order to get data specific to whatever route is passed.
+getSocialMediaData('/posts')
+
+// If we wanted to go a level deeper...
+const getSocialMediaPosts = getSocialMediaData('/posts')
+
+// Here we're passing a callback into getSocialMediaPosts because that's the RETURN value of getSocialMediaData('/posts')
+getSocialMediaPosts(posts => {
+  posts.forEach(post => console.log(post.title))
+})
+
+
+// Maybe rewritting the function as an Arrow function would be cleaner, but it also makes it a bit harder to follow (in my opinion).
+const getData = (baseUrl) => (route) => (callback) => {
+  fetch(`${baseUrl}${route}`)
+    .then(response => response.json())
+    .then(data => callback(data))
+	}
+}
+```
+
+---
+
 
 
 
