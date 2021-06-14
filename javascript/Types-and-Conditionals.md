@@ -79,3 +79,50 @@ if(!username) {
 // here, the ! tell JavaScript to evaluate the parameter into a falsy value.
 ```
 
+---
+
+### Chaining ternary operations
+
+Instead of having a clunky `if`statement, JavaScript allows you to chaining multiple conditions in a `ternary` operation. For example:
+
+```js
+// if-else statement
+let temperature = 14
+let answer
+
+if (temperature < 0) {
+  answer = "I can't feel my hands!"
+} else if (temperature >= 0 && temperature <= 10) {
+  answer = "It's very cold!"
+} else if (temperature > 10 && temperature <= 15) {
+  answer = "It's quite cool."
+} else if (temperature > 15 && temperature < 25) {
+  answer = "It's very nice today."
+} else {
+  answer = "I'm melting!"
+}
+console.log('if-else answer:', answer) // => It's quite cool.
+
+// chained ternary
+let temperature = -8
+let answer = temperature < 0 ? 
+      "I can't feel my hands!" 
+			: temperature >= 0 && temperature <= 10 ? 
+      "It's very cold!"
+			: temperature > 10 && temperature <= 15 ?
+			"It's quite cool."
+			: temperature > 15 && temperature <= 25 ? "It's very nice today." : "I'm melting!"
+
+console.log('ternary answer:', answer) // => I can't feel my hands!	 
+```
+
+---
+
+
+
+
+
+
+
+
+
