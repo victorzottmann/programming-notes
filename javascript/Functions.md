@@ -140,6 +140,19 @@ const getData = (baseUrl) => (route) => (callback) => {
 
 ---
 
+### Tips for naming functions
+
+Always try to keep it simple and straightforward. Try to use words like `get`, `create`, `update` and `delete`. For example:
+
+```js
+function getData() {}
+function createUser() {}
+function updateUser() {}
+function deleteAccount() {}
+```
+
+---
+
 
 
 
