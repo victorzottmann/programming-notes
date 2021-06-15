@@ -7,17 +7,17 @@ A neat trick ES6 allows us to use is to write properties in objects with its sho
 ```js
 // If you define a set of variables outside of an object, and whose names are the same as the names of the keys you specify inside the object, then you can just write it like this:
 
-const red = "#ff0000"
-const blue = "#00ff00"
-const green = "#0000ff"
+const red = "#f00"
+const green = "#0f0"
+const blue = "#00f"
 
 const colors = { red, blue, green }
 
 // Doing it this way saves the trouble of repeting the same name for both keys and values.
 const colors = {
   red: red,
-  blue: blue,
-  green, green
+  green: green,
+  blue: blue
 }
 ```
 
@@ -53,4 +53,20 @@ anotherObj.a = 1
 ```
 
 In theory, only `anotherObj` should contain the key-value pair of `a: 1`, right? Not really. What happens when we assign `anotherObj` to `obj` is that we are actually assigning the **same reference** from `obj` to `anotherObj`. Consequently, updating the data of `anotherObj` will automatically update `obj` as well.
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
