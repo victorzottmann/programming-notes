@@ -56,6 +56,38 @@ In theory, only `anotherObj` should contain the key-value pair of `a: 1`, right?
 
 ---
 
+### Object Destructuring
+
+Destructing is a way to store object data into variables. This makes it easier to access nested data instead of having to always use `dot notation` everywhere. It also helps us make the code DRY.
+
+```js
+// Take this user object for example:
+const user = {
+  name: "Victor",
+  username: "v123",
+  email: "victor@random.com",
+  details: {
+    jobTitle: "Developer",
+    age: 28,
+  }
+}
+// This function returns a string from the data that is passed in the return.
+const displayUserData = () => {
+  return `${user.name} is ${user.details.age} years old and is a ${user.details.jobTitle}.`
+}
+console.log(displayUserData()) // => Victor is 28 years old and is a Developer.
+
+
+// Instead of using dot notation everywhere, we can destructure those keys into variables:
+const { name, details: { jobTitle, age } } = user
+
+// In this case, the keys that are inside the details key are the ones that are being destructured from details. This is also called 'nested destructuring'. And this is the result:
+const displayUserData = () => {
+  return `${name} is ${age} years old and is a ${jobTitle}.`
+}
+console.log(displayUserData()) // => Victor is 28 years old and is a Developer.
+```
+
 
 
 
