@@ -242,7 +242,7 @@ const passwordMap = new Map([
 ])
 // The problem with this approach is that it makes it hard to get the keys of the user objects. This approach is useful for when we need to access the values.
 
-// To get the password of the first user:
+// To GET the password of the first user:
 const pw = passwordMap.get(user1)
 console.log(pw) // => ivjibslabfn
 
@@ -262,7 +262,59 @@ console.log(newMap.size) // => 2
 
 ---
 
+### Improving Methods with Arrow Functions
 
+How to make the `this` keyword accessible from nested methods (and how to avoid returning `undefined`).
+
+```js
+const userData = {
+  username: "victor",
+  jobTitle: "Developer",
+  getBio() {
+    console.log(`User ${this.username} is  a ${this.jobTitle}`)
+  }, // => in this case, the `this` keyword refers to the object itself (userData)
+  askToFriend() {
+    setTimeOut(function() {
+      // it's gonna throw an error because the 'this' keyword not defined within the scope. 
+			console.log(`Would you like to add ${this.username} to your friends list?`)
+    }, 2000)
+  }
+}
+
+
+const userData = {
+  username: "victor",
+  jobTitle: "Developer",
+  getBio() {
+    console.log(`User ${this.username} is  a ${this.jobTitle}`)
+  }, 
+  askToFriend() {
+    setTimeOut(() => {
+			console.log(`Would you like to add ${this.username} to your friends list?`)
+    }, 2000)
+  }
+}
+```
+
+In order to fix the `this` keyword in the `askToFriend()` method, we need to change the function declaration in the `setTimeOut()` to an arrow function. The `this` keyword lies in the lexical scope when used within an arrow function, as opposed to a normal function declaration. In other words, the `this` keyword will be reference from the "parent" scope (outside the `askToFriend()` method).
+
+However, it is important to note that if we were to set the `getBio` method as an arrow function, the `this` keyword will reference outer scope, which is essentially the global scope. In the global scope, `this` points to the `window` object, also known as the **Global Object**.
+
+```js
+const userData = {
+  username: "victor",
+  jobTitle: "Developer",
+  getBio: () => {
+    // this.username and this.jobTitle will be undefined since 'this' is referencing the global scope, as defined through the arrow function in this case.
+    console.log(`User ${this.username} is  a ${this.jobTitle}`)
+  }, 
+  askToFriend() {
+    setTimeOut(() => {
+			console.log(`Would you like to add ${this.username} to your friends list?`)
+    }, 2000)
+  }
+}
+```
 
 
 
