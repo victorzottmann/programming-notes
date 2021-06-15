@@ -88,9 +88,113 @@ const displayUserData = () => {
 console.log(displayUserData()) // => Victor is 28 years old and is a Developer.
 ```
 
+---
 
+### Merging Objects and the Spread Operator
 
+Suppose that we want to create a new user when they signup for our website. We could start by having a `user` object with empty values as a template. The empty values are useful in order to give the user the freedom not to have to submit the fields that aren't necessarily required.
 
+```js
+const user = {
+  name: "",
+  username: "",
+  phoneNumber: "",
+  email: "",
+  password: ""
+}
+```
+
+Then, when the user enter their details and submit, we can store them in a separate `newUser` object:
+
+```js
+const newUser = {
+  username: "v123",
+  email: "victor@random.com",
+  password: "helloworld"
+}
+```
+
+Once we have the data in `newUser`, how can we update that empty `user` object? We can use the `Object.assign()` method, which essentially allows you to update an object with properties from another object.
+
+```js
+Object.assign(user, newUser) // => this merges the second object with the first object.
+```
+
+But the problem here is that `Object.assign` will mutate the object that is passed into the first argument and, depending on the circumstance, this is not what we want at all. 
+
+```js
+// => the merge mutates the user object (not what we want)
+const user = {
+  name: "",
+  username: "v123",
+  phoneNumber: "",
+  email: "victor@random.com",
+  password: "helloworld"
+}
+```
+
+To fix this, we can pass in an empty object as the first argument, which will host the resulting merge of `user` with `newUser`:
+
+```js
+Object.assign({}, user, newUser)
+```
+
+In case you want to include another property into the object created from `Object.assign()`, you can do this:
+
+```js
+Object.assign({}, user, newUser, { verified: false })
+// alternatively, depending on the size of the object, it might be better to create it first, then pass it into the above.
+```
+
+#### The Object Spread Operator
+
+Instead of using `Object.assign()`, we can use the spread operator `...` to merge properties of an object into another. The advantage of this is that it doesn't mutate the original object.
+
+```js
+const user = {
+  name: "",
+  username: "",
+  phoneNumber: "",
+  email: "",
+  password: ""
+}
+
+const newUser = {
+  username: "v123",
+  email: "victor@random.com",
+  password: "helloworld"
+}
+
+const createdUser = { ...user, ...newUser, verified: false }
+console.log(createdUser)
+/*
+	{
+		name: "",
+  	username: "v123",
+  	phoneNumber: "",
+  	email: "victor@random.com",
+  	password: "helloworld"
+	}
+*/
+```
+
+**Important:** one thing to note here is that the order in which you use the spread operator does matter. For example, because we passed the `user` object followed by the `newUser` object into `createdUser`, the properties from `user` will be updated by those of `newUser`. However, if `newUser` was passed as the first argument, the resulting object will consist of empty strings, because these are the values within `user`.
+
+```js
+const createdUser = { ...newUser, ...user, verified: false }
+console.log(createdUser)
+/*
+	{
+		name: "",
+  	username: "",
+  	phoneNumber: "",
+  	email: "",
+  	password: ""
+	}
+*/
+```
+
+---
 
 
 
