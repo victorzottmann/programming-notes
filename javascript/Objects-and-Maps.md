@@ -146,7 +146,7 @@ Object.assign({}, user, newUser, { verified: false })
 // alternatively, depending on the size of the object, it might be better to create it first, then pass it into the above.
 ```
 
-#### The Object Spread Operator
+##### The Object Spread Operator
 
 Instead of using `Object.assign()`, we can use the spread operator `...` to merge properties of an object into another. The advantage of this is that it doesn't mutate the original object.
 
@@ -195,6 +195,88 @@ console.log(createdUser)
 ```
 
 ---
+
+### Maps
+
+One key difference between objects and maps is that maps are ordered, meaning that when keys are added they are stored in sequence, whereas the keys in objects don't follow any order. Maps are also more flexible regarding the range of data types it can hold as keys.
+
+```js
+// To create a new map:
+const myMap = new Map([
+  [1, 1],
+  [true, true]
+])
+
+// To add a new key-value pair:
+myMap.set('hello', 'world')
+
+console.log([...myMap.keys()]) // => [1, true, 'hello']
+
+// Looping over a map:
+myMap.forEach((value, key) => { // => it has to be in the inverse order
+  console.log(key, value)
+})
+/*
+	1, 1
+	true, true,
+	hello, 'world'
+*/
+```
+
+Another very cool feature of maps is related to attaching sensitive data into the properties of an object, without exactly storing them in the object itself (e.g. mapping passwords related to their users). Doing this with objects alone isn't possible, so that's why maps are so useful.
+
+```js
+// Suppose we have two users and two passwords:
+
+const user1 = { name: "john" }
+const user2 = { name: "beth" }
+
+const password1 = "fhdsfhkdjfh"
+const password2 = "ivjibslabfn"
+
+// Instead of storing each password within its related user object, we can create a map to attach each user with their corresponding password.
+
+const passwordMap = new Map([
+  [user1, password1], // we can use objects as keys
+  [user2, password2]
+])
+// The problem with this approach is that it makes it hard to get the keys of the user objects. This approach is useful for when we need to access the values.
+
+// To get the password of the first user:
+const pw = passwordMap.get(user1)
+console.log(pw) // => ivjibslabfn
+
+// It is better to use a variant of Map to access the values when we use objects as keys, called WeakMap.
+const passwordMap = new WeakMap([
+  [user1, password1],
+  [user2, password2]
+])
+
+// To get the size of a map
+const newMap = new Map([
+  ["name", "john"],
+  ["age", 32] 
+])
+console.log(newMap.size) // => 2
+```
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
